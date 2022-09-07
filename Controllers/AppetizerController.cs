@@ -8,7 +8,7 @@ public class AppetizerController : ControllerBase
 {
     private static readonly string[] Appetizers = new[]
     {
-        "Cheese Curds", "Rattlesnake Bites", "Irish Egg Rolls"
+        "Cheese Curds", "Rattlesnake Bites", "Irish Egg Rolls", "Fried Pickles"
     };
 
     private readonly ILogger<AppetizerController> _logger;
