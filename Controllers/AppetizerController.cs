@@ -26,7 +26,7 @@ public class AppetizerController : ControllerBase
             items.Add(new MenuItem() {
                 Name = item,
                 Description = "",
-                Price = 9.49m
+                Price = 10.29m
             });
         }
         return items.ToArray();
