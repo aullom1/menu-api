@@ -2,12 +2,13 @@ SOURCE_IMAGE = os.getenv("SOURCE_IMAGE", default='acrtmc.azurecr.io/tap-demo/men
 LOCAL_PATH = os.getenv("LOCAL_PATH", default='.')
 NAMESPACE = os.getenv("NAMESPACE", default='default')
 NAME = "menu-api"
+RUNTIME = 'ubuntu.18.04-x64'
+CONFIGURATION = 'Debug'
 
 local_resource(
-    'build',
-    'dotnet publish -c Debug -o out',
-    deps=['.'],
-    ignore=['./obj', './bin', './.vscode', './out'],
+    'live-update-build',
+    cmd = 'dotnet publish -c ' + CONFIGURATION + ' -r ' + RUNTIME + ' -o ./bin/.buildsync --self-contained false',
+    deps = ['./bin/' + CONFIGURATION],
 )
 
 k8s_custom_deploy(
@@ -19,10 +20,10 @@ k8s_custom_deploy(
               " --yes >/dev/null" +
               " && kubectl get workload " + NAME + " --namespace " + NAMESPACE + " -o yaml",
     delete_cmd="tanzu apps workload delete " + NAME + " --namespace " + NAMESPACE + " --yes",
-    deps=['./out'],
+    deps=['./bin/.buildsync'],
     container_selector='workload',
     live_update=[
-        sync('./out', '/workspace')
+        sync('./bin/.buildsync', '/workspace')
     ]
 )
 

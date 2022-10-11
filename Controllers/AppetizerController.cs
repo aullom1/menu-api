@@ -21,12 +21,14 @@ public class AppetizerController : ControllerBase
     [HttpGet(Name = "GetAppetizers")]
     public IEnumerable<MenuItem> Get()
     {
+        // _logger.LogInformation("Hi there");
+        
         var items = new List<MenuItem>();
         foreach (var item in Appetizers) {
             items.Add(new MenuItem() {
                 Name = item,
-                Description = "",
-                Price = 10.29m
+                Description = "Happy hour special!",
+                Price = 9.99m
             });
         }
         return items.ToArray();

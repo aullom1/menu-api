@@ -11,3 +11,7 @@ spec:
       url: https://github.com/aullom1/menu-api
       ref:
         branch: main
+  params:
+    - name: annotations
+      value:
+        autoscaling.knative.dev/minScale: "1"
